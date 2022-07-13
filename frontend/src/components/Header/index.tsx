@@ -8,7 +8,7 @@ function Header() {
                 <img src={Logo} alt="Logomarca do projeto" />
                 <h1>DSMeta</h1>
                 <p>Desenvolvido por
-                    <a href="https://www.instagram.com/epcachoeira/">@epcachoeira</a>
+                    <a href="https://www.instagram.com/epcachoeira/"> @epcachoeira</a>
                 </p>
             </div>
         </header>
