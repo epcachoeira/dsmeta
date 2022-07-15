@@ -11,18 +11,23 @@ import { Sale } from "../../models/sale";
 function SalesCard() {
 
     const datei = new Date(new Date().setDate(new Date().getDate() - 90));
-    const [mimDate, setMimDate] = useState(datei);
+    const [minDate, setMinDate] = useState(datei);
     const [maxDate, setMaxDate] = useState(new Date());
 
     const [sales, setSales] = useState<Sale[]>([]);
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/sales`)
+        // Converte o formato da data da tela
+        // toISOString() = retorna aaaa-MM-ddThh:MM:ss.xxx
+        // slice = recorta o pedaço do string => pos inicial + número caracteres
+        const dmin = minDate.toISOString().slice(0, 10);
+        const dmax = maxDate.toISOString().slice(0, 10);
+
+        axios.get(`${BASE_URL}/sales?minDate=${dmin}&maxDate=${dmax}`)
             .then(response => {
-                console.log(response.data);
                 setSales(response.data.content);
             })
-    }, []);
+    }, [minDate, maxDate]);
 
     return (
         <div className="dsmeta-card">
@@ -30,8 +35,8 @@ function SalesCard() {
             <div>
                 <div className="dsmeta-form-control-container">
                     <DatePicker
-                        selected={mimDate}
-                        onChange={(date: Date) => setMimDate(date)}
+                        selected={minDate}
+                        onChange={(date: Date) => setMinDate(date)}
                         className="dsmeta-form-control"
                         dateFormat="dd/MM/yyyy"
                     />
